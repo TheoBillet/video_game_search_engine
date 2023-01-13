@@ -25,6 +25,7 @@
         <!-- Dependencies -->
         <spring-boot.version>2.6.2</spring-boot.version>
         <elasticsearch.version>7.17.8</elasticsearch.version>
+        <jackson.version>2.14.1</jackson.version>
 
         <!-- Test dependencies -->
         <junit.version>5.8.2</junit.version>
@@ -71,6 +72,12 @@
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>elasticsearch-rest-high-level-client</artifactId>
                 <version>${elasticsearch.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
