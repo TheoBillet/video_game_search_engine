@@ -17,23 +17,17 @@ import org.springframework.context.annotation.Configuration;
 public class ElasticSearchConfiguration {
     @Bean
     public RestHighLevelClient restHighLevelClient(
-        @Value("${elasticsearch.host:localhost}") String host,
-        @Value("${elasticsearch.port:9200}") int port,
-        @Value("${elasticsearch.username:elastic}") String username,
-        @Value("${elasticsearch.password:admin}") String password
+        @Value("${elasticsearch.host:localhost}") String host, @Value("${elasticsearch.port:9200}") int port,
+        @Value("${elasticsearch.username:elastic}") String username, @Value("${elasticsearch.password:admin}") String password
     ) {
         final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-        credentialsProvider.setCredentials(AuthScope.ANY,
-            new UsernamePasswordCredentials(username, password));
-
-        RestClientBuilder builder = RestClient.builder(new HttpHost(host, port))
-            .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
+        credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
+        RestClientBuilder builder = RestClient.builder(new HttpHost(host, port)).setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
                 @Override
                 public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
                     return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
                 }
             });
-
         return new RestHighLevelClient(builder);
     }
 }
