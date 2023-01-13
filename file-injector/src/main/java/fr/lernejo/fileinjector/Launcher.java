@@ -16,8 +16,12 @@ import java.util.ArrayList;
 public class Launcher {
 
     public static void main(String[] args) {
+        if (args.length < 1) {
+            return;
+        }
         try (AbstractApplicationContext springContext = new AnnotationConfigApplicationContext(Launcher.class)) {
-            ArrayList<GameModel> games = (new ObjectMapper()).readValue(Paths.get(args[0]).toFile(), new TypeReference<ArrayList<GameModel>>(){});
+            ArrayList<GameModel> games = new ArrayList<>();
+            games = (new ObjectMapper()).readValue(Paths.get(args[0]).toFile(), new TypeReference<ArrayList<GameModel>>(){});
             var rabbitTemplate = springContext.getBean(RabbitTemplate.class);
             for (GameModel game : games) {
                 rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
